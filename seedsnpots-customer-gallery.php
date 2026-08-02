@@ -10,31 +10,60 @@ License: GPL2
 Text Domain: seedsnpots-gallery
 */
 
-if (!defined('ABSPATH')) {
-    exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
 }
 
-define('SPG_VERSION', '1.0.0');
-define('SPG_PLUGIN_PATH', plugin_dir_path(__FILE__));
-define('SPG_PLUGIN_URL', plugin_dir_url(__FILE__));
+define( 'SPG_VERSION', '1.0.0' );
+define( 'SPG_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
+define( 'SPG_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
+
+/*
+|--------------------------------------------------------------------------
+| Includes
+|--------------------------------------------------------------------------
+*/
 
 require_once SPG_PLUGIN_PATH . 'includes/class-database.php';
-require_once SPG_PLUGIN_PATH . 'admin/class-admin.php';
 require_once SPG_PLUGIN_PATH . 'includes/class-post-type.php';
 require_once SPG_PLUGIN_PATH . 'includes/class-assets.php';
-require_once SPG_PLUGIN_PATH . 'includes/class-upload-handler.php';
 require_once SPG_PLUGIN_PATH . 'includes/class-shortcode.php';
+require_once SPG_PLUGIN_PATH . 'includes/class-upload-handler.php';
+require_once SPG_PLUGIN_PATH . 'includes/class-upload-controller.php';
+
+require_once SPG_PLUGIN_PATH . 'admin/class-admin.php';
 require_once SPG_PLUGIN_PATH . 'public/class-upload-form.php';
 
-register_activation_hook(__FILE__, array('SPG_Database', 'install'));
+/*
+|--------------------------------------------------------------------------
+| Activation
+|--------------------------------------------------------------------------
+*/
+
+register_activation_hook( __FILE__, array( 'SPG_Database', 'install' ) );
+
+/*
+|--------------------------------------------------------------------------
+| Bootstrap Plugin
+|--------------------------------------------------------------------------
+*/
 
 function spg_start_plugin() {
-    new SPG_Admin();
-    new SPG_Post_Type();
-    new SPG_Shortcode();
-    new SPG_Assets();
-    new SPG_Upload_Handler();
-    new SPG_Upload_Form();
+
+	new SPG_Admin();
+
+	new SPG_Post_Type();
+
+	new SPG_Assets();
+
+	new SPG_Shortcode();
+
+	new SPG_Upload_Handler();
+
+	new SPG_Upload_Form();
+
+    new SPG_Upload_Controller();
+	
 }
 
-add_action('plugins_loaded', 'spg_start_plugin');
+add_action( 'plugins_loaded', 'spg_start_plugin' );
