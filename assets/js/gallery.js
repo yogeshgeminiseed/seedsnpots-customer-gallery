@@ -1,0 +1,1 @@
+document.addEventListener('DOMContentLoaded',()=>console.log('SPG v0.4 loaded'));
